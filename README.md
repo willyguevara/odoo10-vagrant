@@ -18,7 +18,7 @@ Setup
 * Clone this repo
 
 ```
-git clone https://github.com/danishzahur/odoo-vagrant.git
+git clone https://github.com/willyguevara/odoo10-vagrant
 ```
 
 * Start virtual machine
@@ -28,7 +28,7 @@ cd odoo-vagrant
 vagrant up
 ```
 
-### NOTA: si da el siguiente problema: ###
+### NOTES: If you got issues whith guest additions -__- ###
 
 ```
 Vagrant was unable to mount VirtualBox shared folders. This is usually
@@ -45,19 +45,28 @@ The error output from the command was:
 /sbin/mount.vboxsf: mounting failed with the error: No such device
 ```
 
-Correr los siguientes 2 comandos:
+run these two commands:
 
 ```
 vagrant plugin install vagrant-vbguest
+vagrant vbguest
 ```
 
-luego 
+Install headers for the guest os (ubuntu):
+```
+vagrant ssh
+
+sudo apt-get -y install dkms build-essential linux-headers-$(uname -r) virtualbox-guest-additions-iso
+```
+_fuente_: https://stackoverflow.com/questions/28328775/virtualbox-mount-vboxsf-mounting-failed-with-the-error-no-such-device
+
+then 
 
 ```
 vagrant up --provision
 ```
 
-* Login in the virtual machine
+* Login to the guest virtual machina
 
 ```
 vagrant ssh
@@ -75,7 +84,26 @@ Shared folders
 --------------
 src/my_addons is mapped to /home/vagrant/my_addons, you can write your modules in this directory
 
+* IMPORTANT: Have to add manually the /my_addons directory to config in odoo:
+
+```
+sudo vim /etc/odoo/odoo.conf
+```
+
+line looks like:
+
+```
+addons_path = /usr/lib/python2.7/dist-packages/odoo/addons, /home/vagrant/my_addons
+```
 
 pgAdmin 
 -------
 If you want manage the postgresql server from your desktop, you only have to connect to localhost, username and password is 'admin'
+
+Para entrar al shel de postgres en el server:
+
+```
+vagrant ssh
+
+sudo -i -u postgres psql
+```

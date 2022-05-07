@@ -1,4 +1,4 @@
-# odoo-vagrant
+# odoo10-vagrant
 
 Vagrant Setup for Odoo 10 on Ubuntu 16.04
 

@@ -7,6 +7,9 @@ function print_out {
   echo "--------------------------------------------------"
 }
 
+# print_out "Installing virtualbox-guest-additions-iso Headers packages..."
+# apt-get -y install dkms build-essential linux-headers-$(uname -r) virtualbox-guest-additions-iso
+
 wget -O - https://nightly.odoo.com/odoo.key | apt-key add -
 echo "deb http://nightly.odoo.com/10.0/nightly/deb/ ./" >> /etc/apt/sources.list.d/odoo.list
 
